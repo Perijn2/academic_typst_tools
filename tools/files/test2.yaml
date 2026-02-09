@@ -1,0 +1,36 @@
+structures:
+  main:
+    bits: 32
+    ranges:
+      0:
+        name: SoF
+        description: Start of Frame
+      
+      12-1:
+        name: Identifier
+        depends-on:
+        values:
+          0:
+            description: offset is an immediate value
+            structure: immediateOffset
+      13:
+        name: RTR
+        description: Request to Remote
+      14:
+        name: IDE
+        description: Request to Remote
+      15:
+        name: res
+        description: Request to Remote
+      20-16:
+        name: DLC
+        description: Data length (4bits)
+      28-21:
+        name: Data
+        description: Data length (4bits)
+  immediateOffset:
+    bits: 12
+    ranges:
+      12-1:
+        name: 12-bit immediate offset
+        description: unsigned number

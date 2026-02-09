@@ -1,0 +1,52 @@
+# NAME: transl example database
+
+# lang:
+#   expression: translation to lang
+
+default: "en"  # fallback language
+
+en:
+  of: of
+  page: page
+  pages: pages
+  abstract: abstract
+  supervisor: supervisor
+  authors: authors
+  title: title
+  tutor: tutor
+  number: number
+  number of pages: number of pages
+  keywords: keywords
+  acknowledgments: acknowledgments
+  table of contents: Table of Contents
+  list of figures: List of Figures
+  list of tables: List of Tables
+  acronyms: Acronyms
+  version history: Version History
+  department: department
+  supervised by: Supervised by
+  reviewers: Reviewers
+  approved by: Approved by
+
+nl:
+  of: van
+  page: pagina
+  pages: pagina's
+  abstract: abstract
+  supervisor: begeleider
+  authors: auteurs
+  title: titel
+  tutor: tutor
+  number: aantal
+  number of pages: aantal pagina's
+  keywords: Trefwoorden
+  acknowledgments: Dankbetuigingen
+  table of contents: Inhoudsopgave
+  list of figures: Figuurlijst
+  list of tables: Tabellijst
+  acronyms: Acroniemen
+  version history: Versie Beheer
+  department: afdeling
+  supervised by: Begeleid door
+  reviewers: Recensenten
+  approved by: Goedgekeurd door
