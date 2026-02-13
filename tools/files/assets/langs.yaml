@@ -11,7 +11,7 @@ en:
   pages: pages
   abstract: abstract
   supervisor: supervisor
-  authors: authors
+  authors: author(s)
   title: title
   tutor: tutor
   number: number
@@ -34,7 +34,7 @@ nl:
   pages: pagina's
   abstract: abstract
   supervisor: begeleider
-  authors: auteurs
+  authors: auteur(s)
   title: titel
   tutor: tutor
   number: aantal

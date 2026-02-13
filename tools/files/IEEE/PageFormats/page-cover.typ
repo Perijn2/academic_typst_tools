@@ -56,6 +56,7 @@
     // --------------------------------------------------------
     // Title block
     // --------------------------------------------------------
+    
     #text(
       size: 22pt,
       weight: "bold",
@@ -113,8 +114,6 @@
 
   pagebreak()
 }
-
-
 
 // Academic cover page
 #let IEEE-test-report-frontpage(

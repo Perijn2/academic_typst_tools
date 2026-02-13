@@ -1,6 +1,6 @@
 [package]
 name = "academic-tools"
-version = "0.1.10"
+version = "0.1.19"
 entrypoint = "files/academic-tools.typ"
 categories = [ ]
 disciplines = [ ]

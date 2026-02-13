@@ -28,7 +28,7 @@
 
 #import "tools/version-history.typ": *
 
-#import "/files/IEEE/page-setup.typ": *
+#import "/files/IEEE/PageFormats/page-setup.typ": *
 
 //------------------------------------------------
 // Document formats

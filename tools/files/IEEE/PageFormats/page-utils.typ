@@ -26,7 +26,7 @@
   context [
     #let abstract-title = transl("abstract", mode: str);
     
-    #text(size: 12pt)[
+    #text(size: 9pt)[
       *#emph(abstract-title)* - *#content*
     ]
   ]
@@ -83,23 +83,32 @@
   //print-index()
 
   // Or customize it:
-  figure(
-    print-index(
-      //level: 2,
-      //numbering: "1.",
-      outlined: false,
-      //sorted: "up",
-      //used_only: true,
-      title: "",
-      delimiter: "",
-      row-gutter: 6pt, 
-      used-only: false, 
-      column-ratio: 0.2,
-      clickable:true
-    ),
-    caption: caption,
-    kind: table
-  )
+  //figure(
+    place(
+      center + top,
+      dx: 7.5%
+    
+    )[
+      #block(
+        width: 50%,   // or a fixed size like 400pt
+      )[
+        #set align(left)
+    
+        #print-index(
+          outlined: false,
+          title: "",
+          delimiter: "",
+          row-gutter: 5pt,
+          used-only: false,
+          column-ratio: 0.5,
+          clickable: true,
+        )
+      ]
+    ]//,
+
+    //caption: caption,
+    //kind: table
+  //)
   
   pagebreak()
 }

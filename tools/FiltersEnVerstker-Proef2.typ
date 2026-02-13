@@ -1,10 +1,9 @@
 #import "@preview/unify:0.7.1": num,qty,numrange,qtyrange
 #import "files/academic-tools.typ": *
 
-#set text(lang: "nl")
-#set text(font: "STIX Two Text")
+#import "@preview/meander:0.4.0": *
 
-#set math.equation(numbering: "(1)")
+#set text(lang: "nl")
 
 #show: IEEE-academic-journal.with(
   // Cover page parameters
@@ -24,12 +23,17 @@
   location: [Leeuwarden, Nederland],
 
   use-toc: true,
+
+  acronyms: (
+    "NI": "National Instruments",
+    "D.M.V." : "door middel van",
+  ),
   
   use-front-cover: true,
   logo: [#image("files/assets/NHL_logo.jpg", width: 140pt)],
   
   // Front matter
-  extend-abstract: true,
+  extend-abstract: false,
   abstract: [In dit practicum is een transistorversterkerschakeling in
   gemeenschappelijke-emitterconfiguratie (GES) ontworpen, doorgerekend,
   opgebouwd en geanalyseerd. Het doel van de proef was het realiseren van
@@ -61,7 +65,6 @@
   reference-style: "ieee",
 )
 
-#place-columns()[
   = Modelberekeningen en simulaties
   Het doel van deze proef is het ontwerpen van een transistorversterkerschakeling in GES
   (Gemeenschappelijke Emitter Schakeling). Deze schakeling fungeert als een
@@ -133,9 +136,9 @@
   
   $ V_E = #zi.volt(2.56) $
   
-  == AC-versterking
+  === AC-versterking
   De spanningsversterking in het middenfrequentgebied kan benaderd worden met:
-  
+
   $ A_v approx - ((g_m R_L^*) / (1 + g_m R_"E1")) $ <formule-A_v>
   
   waarbij de effectieve collectorbelasting wordt gegeven door:
@@ -251,19 +254,19 @@
       kind: image,
     ) <image:m1>
     #align(center)[
-  #grid(
-    columns: (auto, auto),
-    gutter: 8pt,
-    align: left,
-    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
-    [$U_"cc"$ [5V/div]],
-    
-    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
-    [$U_c$ [5V/div]], 
-    
-    [*Tijdbasis:*], [#zi.µs(200)/div],
-  )
-]
+    #grid(
+      columns: (auto, auto),
+      gutter: 8pt,
+      align: left,
+      [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+      [$U_"cc"$ [5V/div]],
+      
+      [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+      [$U_c$ [5V/div]], 
+      
+      [*Tijdbasis:*], [#zi.µs(200)/div],
+    )
+  ]
   ]
 
   == Meting 2: Wisselstroomversterking bij 1000 Hz
@@ -314,7 +317,7 @@
     
     [*Tijdbasis:*], [200 µs/div],
   )
-]
+
 
   
   == Meting 3: Maximale uitgangsamplitude
@@ -347,8 +350,8 @@
   ) <table:m3>
   
   #let unit-header(var, unit-str) = {
-  math.equation(numbering: none, [$#var$ [$#unit-str$]])
-}
+    math.equation(numbering: none, [$#var$ [$#unit-str$]])
+  }
 
 #v(1em)
 
@@ -612,39 +615,40 @@ $ R_"out" = R_L dot (frac(v_("o2"), v_("o1")) - 1) $ <fom:Rout>
 
 
 
-- Situatie 2 (zonder RL):
-#figure(
-      image("Meting6_4_zonder_Rl.png"),
-      caption: [Meting 1: Gelijkstroominstelling],
-      kind: image,
-    ) <image:m1>
-    #align(center)[
-  #grid(
-    columns: (auto, auto),
-    gutter: 8pt,
-    align: left,
-    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
-    [$U_s$ [2 V/div]],
-    
-    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
-    [$U_o$ [50 mV/div]], 
-    
-    [*Tijdbasis:*], [100 µs/div],
-  )
-]
+  - Situatie 2 (zonder RL):
+  #figure(
+        image("Meting6_4_zonder_Rl.png"),
+        caption: [Meting 1: Gelijkstroominstelling],
+        kind: image,
+      ) <image:m1>
+      #align(center)[
+    #grid(
+      columns: (auto, auto),
+      gutter: 8pt,
+      align: left,
+      [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+      [$U_s$ [2 V/div]],
+      
+      [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+      [$U_o$ [50 mV/div]], 
+      
+      [*Tijdbasis:*], [100 µs/div],
+    )
+  ]
 
-= Simulatie
-#image("Schema_LTSPICE.png")
-#image("Screenshot 2025-12-12 101413.png")
-#image("Screenshot 2025-12-12 105331 (1).png")
-#image("Screenshot 2025-12-12 110645.png")
-#image("Screenshot 2025-12-12 112618 (1).png")
-#image("Screenshot 2025-12-12 113053.png")
-= Discussie
-De gemeten waarden komen grotendeels overeen met de berekeningen. De gemeten waarde van de collectorspanning van 6,33V is iets hoger dan de gementen waarde die 6V is. Hierdoor is de collectorstroom iets lager namelijk 0,973 mA dan de gekozen 1 mA. De wisselspanningsversterking Av bij 1 kHz is 14,8 wat binnen de marges is. Dit geeft aan dat de versterker goed ontworpen is. De ingangsimpedantie van 31,1 kΩ ligt boven de minimaal vereiste 25 kΩ. Bij de frequentiekarakteristiek is het laagfrequent afvalpunt bepaald op 20Hz. De eis was 15 Hz dus het afvalpunt ligt hoger. Een reden hiervoor kan zijn dat de condensatorwaarden uit de E12-reeks zijn gepakt. De gemeten 1,1 µF is afgerond naar 1 µF en de 618 nF naar 680 nF.
+  = Simulatie
+  #image("Schema_LTSPICE.png")
+  #image("Screenshot 2025-12-12 101413.png")
+  #image("Screenshot 2025-12-12 105331 (1).png")
+  #image("Screenshot 2025-12-12 110645.png")
+  #image("Screenshot 2025-12-12 112618 (1).png")
+  #image("Screenshot 2025-12-12 113053.png")
 
-  = Conclusie
-In dit practicum is er een gemeenschappelijke-emitterschakeling ontworpen. Deze schakeling voldoet aan de gestelde eisen. De schakeling heeft een minimale ingangsimpedantie van 25 kΩ, een wisselspanningversterking van -15±1 v/v en dat het laagfrequent afvalpunt dicht bij de 15 Hz ligt. 1
+  = Discussie
+  De gemeten waarden komen grotendeels overeen met de berekeningen. De gemeten waarde van de collectorspanning van 6,33V is iets hoger dan de gementen waarde die 6V is. Hierdoor is de collectorstroom iets lager namelijk 0,973 mA dan de gekozen 1 mA. De wisselspanningsversterking Av bij 1 kHz is 14,8 wat binnen de marges is. Dit geeft aan dat de versterker goed ontworpen is. De ingangsimpedantie van 31,1 kΩ ligt boven de minimaal vereiste 25 kΩ. Bij de frequentiekarakteristiek is het laagfrequent afvalpunt bepaald op 20Hz. De eis was 15 Hz dus het afvalpunt ligt hoger. Een reden hiervoor kan zijn dat de condensatorwaarden uit de E12-reeks zijn gepakt. De gemeten 1,1 µF is afgerond naar 1 µF en de 618 nF naar 680 nF.
+  
+    = Conclusie
+  In dit practicum is er een gemeenschappelijke-emitterschakeling ontworpen. Deze schakeling voldoet aan de gestelde eisen. De schakeling heeft een minimale ingangsimpedantie van 25 kΩ, een wisselspanningversterking van -15±1 v/v en dat het laagfrequent afvalpunt dicht bij de 15 Hz ligt. 1
 
   = Appendix
 
