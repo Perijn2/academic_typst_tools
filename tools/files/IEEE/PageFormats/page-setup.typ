@@ -34,6 +34,9 @@
 
   acronyms: none,
 
+  show-version-history: false,
+  version-history: (:),
+
   footer-config: (
     short-title: [#title],
     version: "1",
@@ -232,40 +235,27 @@
   if acronyms != none {
     ieee-acronyms(acronyms: acronyms)
   }
-  
-  v(3em, weak: true)
 
-  meander.reflow({
-    import meander: *
+  // Version History
+  if show-version-history and version-history.len() > 0 {
+    vh.version-history(
+      title: "Project Version History",
+      level: 1,
+      ..version-history.flatten(),
+    )
+  }
   
-    // The first container takes 60%
-    // of the page width.
-    container(width: 48%, margin: 0mm)
+  pagebreak()
+
+  //meander.reflow({
+  //  import meander: *
+
+  //  container()
+  
+  body
+
     
-    container(width: 48%, align: right, margin: 0mm)
-
-    /*for i in range(1) {
-      // left column
-      container(width: 48%, margin: 0mm)
-      // right column
-      //container(width: 48%, align: right, margin: 0mm)
-
-      // move to the next page layout (except after the last one)
-      if i + 1 < 1 {
-        pagebreak()
-      }
-    }*/
-  
-    content[
-      #if extend-abstract == false{
-        ieee-abstract(content: [#abstract])
-      }
-
-      #body
-    ]
-
-    opt.overflow.repeat()
-  })
+  //})
   
   // Main body
   //[

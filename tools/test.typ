@@ -105,7 +105,7 @@
   ),
   
   // Bibliography
-  references: "/zotero.bib",
+  references: bibliography("zotero.bib"),
   reference-style: "ieee",
 )
 

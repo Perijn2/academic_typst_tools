@@ -57,7 +57,7 @@
   ),
   
   // Bibliography
-  references: "/automatisch_meten.bib",
+  references: bibliography("automatisch_meten.bib"),
   reference-style: "ieee",
 )
 

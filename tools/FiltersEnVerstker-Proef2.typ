@@ -23,11 +23,6 @@
   location: [Leeuwarden, Nederland],
 
   use-toc: true,
-
-  acronyms: (
-    "NI": "National Instruments",
-    "D.M.V." : "door middel van",
-  ),
   
   use-front-cover: true,
   logo: [#image("files/assets/NHL_logo.jpg", width: 140pt)],
@@ -64,6 +59,7 @@
   references: none,
   reference-style: "ieee",
 )
+
 
   = Modelberekeningen en simulaties
   Het doel van deze proef is het ontwerpen van een transistorversterkerschakeling in GES
@@ -190,15 +186,17 @@
 
   Voor de ontkoppel condensatoren worden de volgende formules gebruikt:
 
-  $ C_"in" = (1) / (2 pi f_L R_"in") $
+  $ C_"in" = (1) / (2 pi f_L R_"in") dot 1.55 $
 
-  $ C_"uit" = (1) / (2 pi f_L dot (R_C + R_L)) $
+  $ C_"uit" = (1) / (2 pi f_L dot (R_C + R_L)) dot 1.55 $
+
+  
 
   wederom volgt hieruit:
 
-  $ C_"in" = #zi.µF(1.1) quad and quad C_"uit" = #zi.nF(618) $
+  $ C_"uit" = #zi.µF(1.1) quad and quad C_"in" = #zi.nF(618) $
 
-  En dus de E12 waarde voor $ C_"in" = #zi.µF(1) quad and quad C_"uit" = #zi.nF(680) $
+  En dus de E12 waarde voor $ C_"uit" = #zi.µF(1) quad and quad C_"in" = #zi.nF(680) $
   
   = Experimentele opstelling
 
@@ -211,7 +209,9 @@
   == Gebruikte schakeling
 
   
-  #image("opstelling_schakeling.png")
+  #image("opstelling_schakeling.png", width: 320pt)
+
+  #v(11em)
   
   = Meetresultaten
 
@@ -242,33 +242,29 @@
     kind: table,
   ) <table:m1>
 
-  #place(
-    auto,
-    scope: "parent",
-    float: true,
-    clearance: 3em,
-  )[
-    #figure(
-      image("Meting1.PNG"),
-      caption: [Meting 1: Gelijkstroominstelling],
-      kind: image,
-    ) <image:m1>
-    #align(center)[
-    #grid(
-      columns: (auto, auto),
-      gutter: 8pt,
-      align: left,
-      [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
-      [$U_"cc"$ [5V/div]],
-      
-      [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
-      [$U_c$ [5V/div]], 
-      
-      [*Tijdbasis:*], [#zi.µs(200)/div],
-    )
+  
+  #figure(
+    image("Meting1.PNG", width: 360pt),
+    caption: [Meting 1: Gelijkstroominstelling],
+    kind: image,
+  ) <image:m1>
+  #align(center)[
+  #grid(
+    columns: (auto, auto),
+    gutter: 8pt,
+    align: left,
+    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+    [$U_"cc"$ [5V/div]],
+    
+    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+    [$U_c$ [5V/div]], 
+    
+    [*Tijdbasis:*], [#zi.µs(200)/div],
+  )
   ]
-  ]
-
+  
+  #v(5em)
+  
   == Meting 2: Wisselstroomversterking bij 1000 Hz
   Bij meting 2 wordt er gekeken hoe de schakeling reageert op een wisselspanning signaal van #zi.kHz(1). Hierbij wordt er gekeken naar de ingangsspanning ($v_s$) en de uitgangsspanning ($v_o$)
   
@@ -300,7 +296,7 @@
 
  
   #figure(
-      image("Meting2_2.PNG"),
+      image("Meting2_2.PNG", width: 360pt),
       caption: [Meting 1: Gelijkstroominstelling],
       kind: image,
     ) <image:m1>
@@ -317,8 +313,9 @@
     
     [*Tijdbasis:*], [200 µs/div],
   )
+]
 
-
+#v(3em)
   
   == Meting 3: Maximale uitgangsamplitude
   Sluit oscilloscoop aan op $V_C$ (collector). Verhoog ingangsspanning tot afplatting optreedt.
@@ -342,7 +339,6 @@
       [*Parameter*], [*Waarde*], [*Eenheid*],
       [$v_s$ (bij afplatting)], [$ #num(sigfig.round(500, 3))$ ], [mVtt],
       [$V_C$ (top-top)], [$ #num(sigfig.round(6.640, 3))$ ], [Vtt],
-      [Opmerking], [#h(3em) ], [-],
     ),
     caption: [Meting 3: Maximale uitgangsamplitude],
     
@@ -353,7 +349,28 @@
     math.equation(numbering: none, [$#var$ [$#unit-str$]])
   }
 
+#figure(
+  image("Meting3_2.PNG", width: 320pt),
+)
+
+#align(center)[
+#grid(
+  columns: (auto, auto),
+  gutter: 8pt,
+  align: left,
+  [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+  [$U_s$ [100 mV/div]],
+  
+  [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+  [$U_c$ [2 V/div]], 
+  
+  [*Tijdbasis:*], [200 µs/div],
+)]
+  
 #v(1em)
+
+=== Observatie
+Bij een $v_c$ van #zi.volt(6.64) zien wij dat de golf verzadigd en dus afwijkt van een sinus vormige golf. Dit valt binnen de eisen van het ontwerp namelijk minimaal $4 V_"tt" $ bij een belasting van #kohm(10).
 
 == Meting 4: Frequentiekarakteristiek - Laag afvalpunt
 
@@ -381,7 +398,6 @@ $ f_(-3"dB") = f_(1"kHz") - 3 " dB" $ <fom:cutoff>
 
 *Meetgegevens:*
 
-// Data array - VULT JE HIER IN
 #let data_frequency = (
   (1, 149.684, 0.200),
   (2, 149.684, 0.240),
@@ -409,7 +425,7 @@ $ f_(-3"dB") = f_(1"kHz") - 3 " dB" $ <fom:cutoff>
     repeat-header: true,
   
     /* #v(3em) header #v(3em) */
-    tablex.rowspanx(2)[*Frequentie*], tablex.colspanx(2)[*Gemeten*], (), tablex.colspanx(2)[*Berekend*],
+    tablex.rowspanx(2)[*Frequentie* [#zi.Hz()]], tablex.colspanx(2)[*Gemeten*], (), tablex.colspanx(2)[*Berekend*],
     (),                 [#unit-header($v_s$, $"mV"_"tt"$)], [#unit-header($v_o$, $"V"_"tt"$)], [#unit-header($A_V$, $"-"$)], [#unit-header($A_V$, $"dB"$)],
     /* #v(3em)#v(3em)#v(3em)#v(3em)-- */
   
@@ -418,7 +434,7 @@ $ f_(-3"dB") = f_(1"kHz") - 3 " dB" $ <fom:cutoff>
         let av_linear = if vs > 0 { vo*1e3 / vs } else { 0 }
         let av_db = if av_linear > 0 { 20 * calc.log(av_linear, base: 10) } else { 0 }
         (
-          [#zi.Hz(freq)],
+          [#freq],
           [#num(sigfig.round(vs, 3))],
           [#num(sigfig.round(vo, 3))],
           [#num(sigfig.round(av_linear, 3))],
@@ -470,12 +486,7 @@ $ f_(-3"dB") = f_(1"kHz") - 3 " dB" $ <fom:cutoff>
 
     //lq.place(44.8, 18, align: left, pad(.7em)[$"-3dB"$]),
 
-    lq.place(
-      17, -1.2,
-      align: left,
-      
-      [$"2" dot 10^1$]
-    )
+    
   ),
   caption: [$"Versterking" A_("v") "vs Frequentie Hz"$],
 ) <fig:bode_v>
@@ -533,16 +544,55 @@ $ R_"in" = R_s dot (frac(v_("o1"), v_("o2")) - 1) $ <fom:Rin>
     [*Parameter*], [*Waarde*], [*Eenheid*],
     [Ingang (frequentie)], [1000], [Hz],
     [Ingang (spanning)], [150], [mVtt],
-    [$v_("o1")$ (zonder Rs)], [#num(sigfig.round(2.200, 3)) ], [Vtt], //26.90k
-    [$R_s$ (serieweerstand)], [#num(sigfig.round(25, 3)) ], [kΩ],
-    [$v_("o2")$ (met Rs)], [#num(sigfig.round(1.220, 3)) ], [Vtt],
-    [$R_"in"$ (berekend)], [#num(sigfig.round(25e3 / ((2.200 / 1.220) - 1)/1e3, 3)) ], [kΩ],
+    [$v_("o1")$ (zonder $R_s$)], [#num(sigfig.round(2.200, 3)) ], [Vtt], //26.90k
+    [$R_s$ (serieweerstand)], [#num(sigfig.round(27, 3)) ], [kΩ],
+    [$v_("o2")$ (met $R_s$)], [#num(sigfig.round(1.220, 3)) ], [Vtt],
+    [$R_"in"$ (berekend)], [#num(sigfig.round(27e3 / ((2.200 / 1.220) - 1)/1e3, 3)) ], [kΩ],
   ),
   caption: [Meting 5: Ingangsimpedantie],
   kind: table,
 ) <table:m5>
 
+*Screenshots:*
+#figure(
+      image("Meting5_2.PNG", width: 320pt),
+      caption: [Meting 5: zonder $R_s$],
+      kind: image,
+    ) <image:m1>
+    #align(center)[
+  #grid(
+    columns: (auto, auto),
+    gutter: 8pt,
+    align: left,
+    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+    [$U_o$ [500 mV/div]],
+    
+    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+    [$U_s$ [50 mV/div]], 
+    
+    [*Tijdbasis:*], [100 µs/div],
+  )
+]
 
+#figure(
+      image("Meting5_6_26k9.PNG", width: 320pt),
+      caption: [Meting 5: met $R_s$],
+      kind: image,
+    ) <image:m1>
+    #align(center)[
+  #grid(
+    columns: (auto, auto),
+    gutter: 8pt,
+    align: left,
+    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+    [$U_o$ [500 mV/div]],
+    
+    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+    [$U_s$ [50 mV/div]], 
+    
+    [*Tijdbasis:*], [100 µs/div],
+  )
+]
 
 #v(3em)
 
@@ -564,9 +614,9 @@ $ R_"out" = R_L dot (frac(v_("o2"), v_("o1")) - 1) $ <fom:Rout>
 
 *Werkwijze:*
 - Ingang: 1000 Hz, 150 mVtt (met $R_L$ aangesloten)
-- Meet $v_o$ → zet neer als $v_("o1")$
+- Meet $v_o ->$ zet neer als $v_("o1")$
 - Verwijder $R_L$ 
-- Meet $v_o$ opnieuw → zet neer als $v_("o2")$
+- Meet $v_o$ opnieuw $->$ zet neer als $v_("o2")$
 - Bereken $R_"out"$ met formule
 - Neem screenshots van beide situaties
 
@@ -579,7 +629,7 @@ $ R_"out" = R_L dot (frac(v_("o2"), v_("o1")) - 1) $ <fom:Rout>
     auto-vlines: true,
     
     [*Parameter*], [*Waarde*], [*Eenheid*],
-    [Ingang (frequentie)], [1000], [$H_z$],
+    [Ingang (frequentie)], [1000], [#zi.hertz()],
     [Ingang (spanning)], [150], [$"mV"_"tt"$],
     [$R_L$ (belasting)], [#num(sigfig.round(10, 3)) ], [k$Omega$],
     [$v_("o1")$ (met $R_L$)], [#num(sigfig.round(2.240, 3)) ], [$V_"tt"$],
@@ -591,10 +641,9 @@ $ R_"out" = R_L dot (frac(v_("o2"), v_("o1")) - 1) $ <fom:Rout>
 ) <table:m6>
 
 *Screenshots:*
-- Situatie 1 (met RL):
 #figure(
-      image("Meting6_2.png"),
-      caption: [Meting 1: Gelijkstroominstelling],
+      image("Meting6_2.png", width: 320pt),
+      caption: [Meting 5: met RL],
       kind: image,
     ) <image:m1>
     #align(center)[
@@ -603,57 +652,151 @@ $ R_"out" = R_L dot (frac(v_("o2"), v_("o1")) - 1) $ <fom:Rout>
     gutter: 8pt,
     align: left,
     [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
-    [$U_s$ [1 V/div]],
+    [$U_o$ [1 V/div]],
     
     [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
-    [$U_o$ [50 mV/div]], 
+    [$U_s$ [50 mV/div]], 
     
     [*Tijdbasis:*], [100 µs/div],
   )
 ]
   
-
-
-
-  - Situatie 2 (zonder RL):
-  #figure(
-        image("Meting6_4_zonder_Rl.png"),
-        caption: [Meting 1: Gelijkstroominstelling],
-        kind: image,
-      ) <image:m1>
-      #align(center)[
-    #grid(
-      columns: (auto, auto),
-      gutter: 8pt,
-      align: left,
-      [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
-      [$U_s$ [2 V/div]],
-      
-      [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
-      [$U_o$ [50 mV/div]], 
-      
-      [*Tijdbasis:*], [100 µs/div],
-    )
-  ]
-
-  = Simulatie
-  #image("Schema_LTSPICE.png")
-  #image("Screenshot 2025-12-12 101413.png")
-  #image("Screenshot 2025-12-12 105331 (1).png")
-  #image("Screenshot 2025-12-12 110645.png")
-  #image("Screenshot 2025-12-12 112618 (1).png")
-  #image("Screenshot 2025-12-12 113053.png")
-
-  = Discussie
-  De gemeten waarden komen grotendeels overeen met de berekeningen. De gemeten waarde van de collectorspanning van 6,33V is iets hoger dan de gementen waarde die 6V is. Hierdoor is de collectorstroom iets lager namelijk 0,973 mA dan de gekozen 1 mA. De wisselspanningsversterking Av bij 1 kHz is 14,8 wat binnen de marges is. Dit geeft aan dat de versterker goed ontworpen is. De ingangsimpedantie van 31,1 kΩ ligt boven de minimaal vereiste 25 kΩ. Bij de frequentiekarakteristiek is het laagfrequent afvalpunt bepaald op 20Hz. De eis was 15 Hz dus het afvalpunt ligt hoger. Een reden hiervoor kan zijn dat de condensatorwaarden uit de E12-reeks zijn gepakt. De gemeten 1,1 µF is afgerond naar 1 µF en de 618 nF naar 680 nF.
-  
-    = Conclusie
-  In dit practicum is er een gemeenschappelijke-emitterschakeling ontworpen. Deze schakeling voldoet aan de gestelde eisen. De schakeling heeft een minimale ingangsimpedantie van 25 kΩ, een wisselspanningversterking van -15±1 v/v en dat het laagfrequent afvalpunt dicht bij de 15 Hz ligt. 1
-
-  = Appendix
-
-  
+#figure(
+  image("Meting6_4_zonder_Rl.png", width: 320pt),
+  caption: [Meting 6: zonder RL],
+  kind: image,
+) <image:m1>
+#align(center)[
+  #grid(
+    columns: (auto, auto),
+    gutter: 8pt,
+    align: left,
+    [#box(fill: yellow, width: 1.2em, height: 0.8em, radius: 2pt) *CH1:*],
+    [$U_o$ [2 V/div]],
+    
+    [#box(fill: rgb("#00FFFF"), width: 1.2em, height: 0.8em, radius: 2pt) *CH2:*],
+    [$U_s$ [50 mV/div]], 
+    
+    [*Tijdbasis:*], [100 µs/div],
+  )
 ]
 
+#v(2em)
 
+= Simulatie
 
+Om te controleren of het theoretisch ontworpen versterkermodel overeenkomt met
+de verwachte werking, is de gemeenschappelijke-emitterschakeling (GES)
+gesimuleerd met behulp van LTspice. Met behulp van deze simulatie kan het
+frequentiegedrag, de spanningsversterking en de impedantie-eigenschappen van
+de schakeling worden geanalyseerd zonder de invloed van meetapparatuur of
+componenttoleranties.
+
+De simulatie is uitgevoerd met dezelfde componentwaarden als die in de
+praktische schakeling zijn toegepast. Hierdoor kan een directe vergelijking
+worden gemaakt tussen de berekende waarden, de experimentele metingen en de
+simulatieresultaten.
+
+== Schakeling
+
+In LTspice is de volledige versterkerschakeling gemodelleerd met een BC547
+transistor. De voedingsspanning is ingesteld op $V_"CC" = #zi.volt(12)$ en alle
+weerstanden en condensatoren zijn gekozen volgens de eerder berekende E12
+waarden. De ingangsspanning is gemodelleerd als een sinusvormige bron met een
+frequentie van 1 kHz.
+
+#figure(
+  image("Schema_LTSPICE.png"),
+  caption: [Schakeling GES in LTspice],
+  kind: image,
+)
+
+== Spanningsversterking
+
+Om de spanningsversterking van de schakeling te bepalen is een
+transient-simulatie uitgevoerd waarbij zowel het ingangssignaal als het
+uitgangssignaal gelijktijdig zijn weergegeven. De verhouding tussen de
+uitgangsspanning en de ingangsspanning geeft direct de spanningsversterking
+van de schakeling.
+
+Uit de simulatie blijkt dat de versterking ongeveer
+
+$ A_v = #zi.volt(1.08) / #zi.mV(75) approx 14.3 $
+
+bedraagt. Deze waarde ligt dicht bij de ontworpen versterking van
+$A_v = -15$, waardoor kan worden geconcludeerd dat het simulatiemodel goed
+overeenkomt met de theoretische berekeningen.
+
+== Collector spanning
+
+Daarnaast is de collectorspanning geanalyseerd om te controleren of de
+transistor correct in zijn actieve gebied werkt. In de simulatie bevindt de
+collectorspanning zich rond het midden van de voedingsspanning, wat overeenkomt
+met de ontworpen DC-biasinstelling.
+
+#figure(
+  image("Screenshot 2025-12-12 105331 (1).png"),
+  caption: [Collectorspanning in de simulatie],
+  kind: image,
+)
+
+== -3dB punt
+
+Met behulp van een AC-sweep analyse is het frequentiegedrag van de versterker
+bepaald. Hierbij wordt de frequentie van het ingangssignaal gevarieerd terwijl
+de spanningsversterking wordt gemeten.
+
+Het punt waarbij de versterking 3 dB lager is dan de versterking in het
+middenfrequentgebied wordt het -3 dB punt genoemd. Dit punt bepaalt het
+laagfrequent afvalpunt van de versterker.
+
+#figure(
+  image("Screenshot 2025-12-12 110645.png"),
+  caption: [Frequentiekarakteristiek en -3 dB punt],
+  kind: image,
+)
+
+== Ingangsimpedantie
+
+De ingangsimpedantie van de versterker is eveneens onderzocht in LTspice. Door
+de verhouding tussen de ingangsspanning en de ingangsstroom te analyseren kan
+de effectieve ingangsimpedantie worden bepaald.
+
+#figure(
+  image("Screenshot 2025-12-12 112618 (1).png"),
+  caption: [Ingangsimpedantie karakteristiek],
+  kind: image,
+)
+
+== Uitgangsimpedantie
+
+Ten slotte is de uitgangsimpedantie van de schakeling geanalyseerd. Hierbij is
+gekeken naar de verandering van de uitgangsspanning bij verschillende
+belastingcondities.
+
+#figure(
+  image("Screenshot 2025-12-12 113053.png"),
+  caption: [Uitgangsimpedantie karakteristiek],
+  kind: image,
+)
+
+= Discussie
+De gemeten waarden komen grotendeels overeen met de berekeningen. De gemeten waarde van de collectorspanning van 6,33V is iets hoger dan de gementen waarde die 6V is. Hierdoor is de collectorstroom iets lager namelijk 0,973 mA dan de gekozen 1 mA. De wisselspanningsversterking Av bij 1 kHz is 14,8 wat binnen de marges is. Dit geeft aan dat de versterker goed ontworpen is. De ingangsimpedantie van 31,1 kΩ ligt boven de minimaal vereiste 25 kΩ. Bij de frequentiekarakteristiek is het laagfrequent afvalpunt bepaald op 20Hz. De eis was 15 Hz dus het afvalpunt ligt hoger. Een reden hiervoor kan zijn dat de condensatorwaarden uit de E12-reeks zijn gepakt. De gemeten 1,1 µF is afgerond naar 1 µF en de 618 nF naar 680 nF.
+
+= Conclusie
+In dit practicum is een gemeenschappelijke-emitterschakeling ontworpen,
+berekend, opgebouwd en getest. De schakeling functioneert als een
+wisselspanningsversterker voor kleine signalen en voldoet grotendeels aan de
+gestelde ontwerpeisen.
+
+De versterker behaalt een spanningsversterking van ongeveer 15 v/v bij
+1 kHz, wat overeenkomt met de ontwerpeis van $-15 plus.minus 1$. Daarnaast
+ligt de gemeten ingangsimpedantie boven de vereiste 25 kΩ en bevindt het
+laagfrequent afvalpunt zich rond 20 Hz, wat dicht bij de ontwerpspecificatie
+van 15 Hz ligt.
+
+De kleine afwijkingen tussen berekening, meting en simulatie kunnen worden
+verklaard door componenttoleranties, afrondingen naar E12-waarden en
+meetonnauwkeurigheden. Over het algemeen kan worden geconcludeerd dat het
+ontwerp van de versterkerschakeling succesvol is en dat de resultaten van
+berekeningen, metingen en simulaties goed met elkaar overeenkomen.
